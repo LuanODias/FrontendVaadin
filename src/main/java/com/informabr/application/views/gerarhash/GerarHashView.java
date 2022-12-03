@@ -13,9 +13,12 @@ import com.vaadin.flow.component.dependency.Uses;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
@@ -33,71 +36,31 @@ import javax.validation.constraints.Size;
 @PageTitle("Gerar Hash")
 @Route(value = "gerar-hash", layout = MainLayout.class)
 @Uses(Icon.class)
-public class GerarHashView extends Div {
+public class GerarHashView extends VerticalLayout {
 
-    @NotBlank
-    private TextField nome = new TextField("Nome");
 
-    @NotBlank
-    @Email
-    private EmailField email = new EmailField("Endereço de E-mail");
-    @NotBlank
-    @CPF
-    private TextField cpf = new TextField("CPF");
-    @NotBlank
-    @Size(min = 8, max = 24, message = "A senha deve possuir entre 8 e 24 caracteres")
-    private PasswordField senha = new PasswordField("Senha");
 
-    @NotBlank
-    private PasswordField confirmarsenha = new PasswordField("Confirmar senha");
 
-    private Button cancel = new Button("Cancelar");
-    private Button save = new Button("Salvar");
 
-    private Binder<SamplePerson> binder = new Binder<>(SamplePerson.class);
+    public GerarHashView() {
 
-    public GerarHashView(SamplePersonService personService) {
+        GerarHashForm gerarHashForm = new GerarHashForm();
+        setHorizontalComponentAlignment(Alignment.CENTER, gerarHashForm);
         addClassName("gerar-hash-view");
 
         add(createTitle());
-        add(createFormLayout());
-        add(createButtonLayout());
+        add(gerarHashForm);
 
-        binder.bindInstanceFields(this);
-        clearForm();
+        HashFormBinder binder = new HashFormBinder(gerarHashForm);
+        binder.addBindingAndValidation();
 
-        cancel.addClickListener(e -> clearForm());
 
-        save.addClickListener(e -> {
-            personService.update(binder.getBean());
-            Notification.show(binder.getBean().getClass().getSimpleName() + " details stored.");
-            clearForm();
-        });
-    }
-
-    private void clearForm() {
-        binder.setBean(new SamplePerson());
     }
 
     private Component createTitle() {
-        return new H3("Personal information");
+        return new H3("Cadastre uma chave para acessar os endpoints");
     }
 
-    private Component createFormLayout() {
-        FormLayout formLayout = new FormLayout();
-        email.setErrorMessage("Please enter a valid email address");
-        formLayout.add(nome, email, cpf, senha, confirmarsenha);
-        return formLayout;
-    }
-
-    private Component createButtonLayout() {
-        HorizontalLayout buttonLayout = new HorizontalLayout();
-        buttonLayout.addClassName("button-layout");
-        save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        buttonLayout.add(save);
-        buttonLayout.add(cancel);
-        return buttonLayout;
-    }
 
 
 
