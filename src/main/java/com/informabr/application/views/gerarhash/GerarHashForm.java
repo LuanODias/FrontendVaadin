@@ -2,6 +2,7 @@ package com.informabr.application.views.gerarhash;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
@@ -30,14 +31,19 @@ public class GerarHashForm extends FormLayout {
 
     public GerarHashForm(){
         nome = new TextField("Nome");
+        nome.setRequiredIndicatorVisible(true);
 
         email = new EmailField("E-mail");
+        email.setRequiredIndicatorVisible(true);
 
         cpf = new TextField("Cpf");
+        cpf.setRequiredIndicatorVisible(true);
 
         senha = new PasswordField("Senha");
+        senha.setRequiredIndicatorVisible(true);
 
         confirmarsenha = new PasswordField("Confirmar senha");
+        confirmarsenha.setRequiredIndicatorVisible(true);
 
         errorMessageField = new Span();
 

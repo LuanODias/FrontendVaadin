@@ -45,11 +45,19 @@ public class GerarHashView extends VerticalLayout {
     public GerarHashView() {
 
         GerarHashForm gerarHashForm = new GerarHashForm();
+        setSizeFull();
         setHorizontalComponentAlignment(Alignment.CENTER, gerarHashForm);
+        setAlignItems(Alignment.CENTER);
         addClassName("gerar-hash-view");
 
         add(createTitle());
         add(gerarHashForm);
+
+        gerarHashForm.getSave().addClickListener(event -> {
+
+
+
+        });
 
         HashFormBinder binder = new HashFormBinder(gerarHashForm);
         binder.addBindingAndValidation();
